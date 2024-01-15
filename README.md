@@ -108,4 +108,4 @@ Type : string
 Value : info,warn,error,debug,debugVerbose
 
 Enable “verbose” option on Robust Import set transformer records.
-![image](https://github.com/phanivallur/snow_tool/assets/33691241/b90169b3-45ba-4930-9cc2-bedef2b0cc51)
+
