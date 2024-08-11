@@ -24,6 +24,9 @@ public class ImportSet {
 	private Date load_completed;
 	private String state;
 	private String sys_created_by;
+	private String link;
+	private String value;
+	
 	public String getTransaction_id() {
 		return transaction_id;
 	}
@@ -149,5 +152,17 @@ public class ImportSet {
 	}
 	public void setSys_created_by(String sys_created_by) {
 		this.sys_created_by = sys_created_by;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
 	}	
 }

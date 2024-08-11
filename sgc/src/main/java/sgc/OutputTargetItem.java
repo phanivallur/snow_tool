@@ -1,5 +1,6 @@
 package sgc;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class OutputTargetItem {
@@ -9,12 +10,12 @@ public class OutputTargetItem {
 	private String error_detail;
 	private String run_table;
 	private int sys_mod_count;
-	private Date sys_updated_on;
+	private LocalDateTime sys_updated_on;
 	private String sys_tags;
 	private String warning_detail;
 	private String sys_id;
 	private String sys_updated_by;
-	private Date sys_created_on;
+	private LocalDateTime sys_created_on;
 	private String actual_target_table;
 	private TargetRecordId target_record_id;
 	private String operation;
@@ -58,10 +59,10 @@ public class OutputTargetItem {
 	public void setSys_mod_count(int sys_mod_count) {
 		this.sys_mod_count = sys_mod_count;
 	}
-	public Date getSys_updated_on() {
+	public LocalDateTime getSys_updated_on() {
 		return sys_updated_on;
 	}
-	public void setSys_updated_on(Date sys_updated_on) {
+	public void setSys_updated_on(LocalDateTime sys_updated_on) {
 		this.sys_updated_on = sys_updated_on;
 	}
 	public String getSys_tags() {
@@ -88,10 +89,10 @@ public class OutputTargetItem {
 	public void setSys_updated_by(String sys_updated_by) {
 		this.sys_updated_by = sys_updated_by;
 	}
-	public Date getSys_created_on() {
+	public LocalDateTime getSys_created_on() {
 		return sys_created_on;
 	}
-	public void setSys_created_on(Date sys_created_on) {
+	public void setSys_created_on(LocalDateTime sys_created_on) {
 		this.sys_created_on = sys_created_on;
 	}
 	public String getActual_target_table() {
