@@ -15,6 +15,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
@@ -50,26 +51,31 @@ public class InstanceDriver {
 		if(input_data.contains("db_listlogs")) {
 			extractDatabaseLogFilePath(input_data, record_time);	
 		} else {
-			ProcessRecord pr=new ProcessRecord();
-			pr.fetchRecordCreatedTime(instance_name, input_data);
+			splitImportSet(instance_name, input_data);
+			//ProcessRecord pr=new ProcessRecord();
+			//pr.fetchRecordCreatedTime(instance_name, input_data);
 		}
 		
 		// TODO Auto-generated method stub
-		/*String instance_name=args[0];
-		String source_sys_id=args[1];
+		
+	}
+
+	private static void splitImportSet(String instance_name, String input_data) {
+		// TODO Auto-generated method stub
 		int i=0;
 		InstanceDriver id=new InstanceDriver();
 		String importSetResponse=null;
 		try {
-			importSetResponse = id.fetchImportSetAPIResponse(source_sys_id, instance_name);
+			importSetResponse = id.fetchImportSetAPIResponse(input_data, instance_name);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println("Import Set Response : "+ importSetResponse);
+		System.out.println("Import Set Response : "+ importSetResponse);
 		String importSetNumber=id.createImportSetObject(importSetResponse);
 		System.out.println(" Provided sys_id is of import set : " + importSetNumber);
-		String importSetRowsResponse=id.fetchImportSetRowsResponse(source_sys_id, instance_name);
+		String importSetRowsResponse=id.fetchImportSetRowsResponse(input_data, instance_name);
+		System.out.println("Import Set Rows Response : "+ importSetRowsResponse);
 		
 		JsonNode rootNode;
 		JsonNode resultNode;
@@ -92,15 +98,15 @@ public class InstanceDriver {
 			shuffleNum(numPool);
 			
 			int[] pickedNumbers = Arrays.copyOfRange(numPool, 0, 10);
-			System.out.println("Randomly picked below rows : ");
+			//System.out.println("Randomly picked below rows : ");
 			for(int num:pickedNumbers) {
-				System.out.println("Processing row : "+listImportSetRow[num].sys_import_row);
-				//id.reprocessImportSetRow(id, listImportSetRow[num].sys_id, instance_name);				
+				//System.out.println("Processing row : "+listImportSetRow[num].sys_import_row);
+				id.reprocessImportSetRow(id, listImportSetRow[num].sys_id, instance_name);				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	
 		/*if(importSetRecord) {
 			fetchCommentsFromImportSet(source_sys_id);
@@ -204,15 +210,16 @@ public class InstanceDriver {
 		try {
 			String sysImportSetRowId=sys_id;
 			String singleImportSetApiResponse=id.createSingleImportSet(sysImportSetRowId, instance_name);
-			System.out.println("SingleImportSetResponse : "+singleImportSetApiResponse);
+			//System.out.println("SingleImportSetResponse : "+singleImportSetApiResponse);
 			String singleRowImportSetId=id.fetchSingleRowImportSetId(singleImportSetApiResponse);
-			System.out.println("Single Row Import Set Id : "+singleRowImportSetId);
+			//System.out.println("Single Row Import Set Id : "+singleRowImportSetId);
 			String iSetResponse = id.fetchImportSetAPIResponse(singleRowImportSetId, instance_name);
 			String importSetId=id.createImportSetObject(iSetResponse);
-			System.out.println("Corresponding Import Set ID : " + importSetId);
+			System.out.println(importSetId);
 			String transformHistoryApiResponse=id.fetchTransformHistoryApiResponse(importSetId,instance_name);
+			//System.out.println("Transform History API Response : "+ transformHistoryApiResponse);
 			String transformHistorySysId=id.obtainTransformHistorySysId(transformHistoryApiResponse);
-			System.out.println("Required Run Context Id : "+ transformHistorySysId);
+			//System.out.println("Required Run Context Id : "+ transformHistorySysId);
 			String otiApiResponse=id.fetchOtiApiResponse(transformHistorySysId, instance_name);
 			//System.out.println("Output Target Item Response : "+ otiApiResponse);
 			//String operation=id.printOutputTargetItemList(sysImportSetRowId, otiApiResponse,transformHistorySysId);
@@ -242,7 +249,7 @@ public class InstanceDriver {
 		StringBuffer response=new StringBuffer();
 		//String url="https://"+instance_name+".service-now.com/api/now/table/sys_import_set?sysparm_query=sys_idSTARTSWITH"+singleRowImportSetId;
 		String url="https://"+instance_name+".service-now.com/api/now/table/sys_import_set_row?sysparm_query=sys_import_set%3D"+importSetSysId;
-		System.out.println("URL : "+ url);
+		//System.out.println("URL : "+ url);
 		try {
 			URL obj=new URL(url);
 			HttpURLConnection con=null;
@@ -359,7 +366,7 @@ public class InstanceDriver {
 		
 		String prettyJson=null;
 		String url="https://"+instance_name+".service-now.com/api/snc/singlerowimportset/"+sysImportSetRowId;
-		System.out.println(url);
+		//System.out.println(url);
 		try {
 			URL obj=new URL(url);
 			HttpURLConnection con=(HttpURLConnection)obj.openConnection();
@@ -440,7 +447,7 @@ public class InstanceDriver {
 		// TODO Auto-generated method stub
 		String prettyJson=null;
 		String url="https://"+instance_name+".service-now.com/api/now/table/cmdb_ire_output_target_item?sysparm_query=run_id%3D"+transformHistorySysId;
-		System.out.println(url);
+		//System.out.println(url);
 		try {
 			URL obj=new URL(url);
 			HttpURLConnection con=(HttpURLConnection)obj.openConnection();
@@ -520,7 +527,7 @@ public class InstanceDriver {
 		// TODO Auto-generated method stub
 		String prettyJson=null;
 		String url="https://"+instance_name+".service-now.com/api/now/table/sys_import_set_run?sysparm_query=set%3D"+importSetId;
-		System.out.println("Transform History URL : "+ url);
+		//System.out.println("Transform History URL : "+ url);
 		try {
 			URL obj=new URL(url);
 			HttpURLConnection con=(HttpURLConnection)obj.openConnection();
@@ -600,7 +607,7 @@ public class InstanceDriver {
 		
 		String prettyJson = null;
 		String url="https://"+instance_name+".service-now.com/api/now/table/sys_import_set?sysparm_query=sys_idSTARTSWITH"+singleRowImportSetId;
-		System.out.println("URL : "+ url);
+		//System.out.println("URL : "+ url);
 		try {
 			URL obj=new URL(url);
 			HttpURLConnection con=(HttpURLConnection)obj.openConnection();
